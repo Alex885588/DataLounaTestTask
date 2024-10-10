@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis_cache
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  postgres:
+    image: postgres:alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Alex445577&&  
+      POSTGRES_DB: DataLounaTaskDB        
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: nest_app
+    ports:
+      - '3000:3000'
+    environment:
+      ClientID: bc3356a22e654049aecea379bb679b74
+      ClientSecret: Li/jLV+WKqPGmfISeINaZyOeBA2d9AvAiC/QSxZzmtIEQ2fThnc34WmRIgfxqO+B6weZHRE+NvZpFwPIUnHbvw==
+      DB_HOST: postgres_db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: Alex445577&&          
+      DB_NAME: DataLounaTaskDB         
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - .:/usr/src/app
+    command: npm run start:dev
+
+volumes:
+  redis_data:
+  postgres_data:
