@@ -13,9 +13,11 @@ import { PurchaseService } from './services/purchase.service';
 import { UserService } from './services/user.service';
 import { PurchaseItemController } from './controllers/purchaseItem.controller';
 import { BusinessLogicService } from './services/businessLogic.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
